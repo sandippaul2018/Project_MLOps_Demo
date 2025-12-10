@@ -18,36 +18,22 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: '3.9'
+      
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
+      
       - name: Generate Fresh Data
         run: |
           python src/generate_data.py
+      
       - name: Train New Model
         run: |
           python src/train.py
+      
       - name: Commit and Push Changes
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
           git add bat_curing_pipeline.pkl model_metrics.csv curing_data.csv
-          # Only commit if there are changes
           git diff --quiet && git diff --staged --quiet || (git commit -m '🤖 MLOps: Auto-retrained model [skip ci]' && git push)
-        file: ./coverage.xml
-        fail_ci_if_error: false
-    
-    - name: Build Docker image
-      if: success()
-      run: |
-        docker build -t opticure:${{ github.sha }} . || true
-    
-    - name: Archive artifacts
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: models-and-data
-        path: |
-          models/
-          data/
-        retention-days: 30
