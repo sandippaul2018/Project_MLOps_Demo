@@ -9,13 +9,13 @@
     "quality_grade"
   ],
   "quality_grades": [
-    "Premium",
-    "Standard"
+    "Standard",
+    "Premium"
   ],
   "grade_distribution": {
-    "Premium": 463,
-    "Standard": 37
+    "Standard": 463,
+    "Premium": 37
   },
   "random_seed": 42,
-  "generation_timestamp": "2025-12-10T15:44:16.459619"
+  "generation_timestamp": "2025-12-10T18:55:55.177696"
 }

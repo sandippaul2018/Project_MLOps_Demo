@@ -135,16 +135,16 @@ dmypy.json
 .DS_Store
 Thumbs.db
 
-# Model artifacts
+# Model artifacts (but allow root-level artifacts for MLOps)
 models/
-*.pkl
-*.joblib
+# *.pkl  - COMMENTED: allow bat_curing_pipeline.pkl in root
+# *.joblib
 *.h5
 
-# Data files
+# Data files (but allow root-level data files for MLOps)
 data/
-*.csv
-*.xlsx
+# *.csv  - COMMENTED: allow curing_data.csv in root
+# *.xlsx
 
 # Logs
 logs/
