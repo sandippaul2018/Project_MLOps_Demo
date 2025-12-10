@@ -66,7 +66,7 @@ def main():
     # Save to root folder as curing_data.csv
     output_path = Path(__file__).parent.parent / 'curing_data.csv'
     df.to_csv(output_path, index=False)
-    print(f"✓ Data saved to: {output_path}")
+    print(f"[OK] Data saved to: {output_path}")
     
     # Display summary statistics
     print("\n" + "=" * 60)
@@ -100,7 +100,7 @@ def main():
     metadata_path = Path(__file__).parent.parent / 'curing_data_metadata.json'
     with open(metadata_path, 'w') as f:
         json.dump(metadata, f, indent=2)
-    print(f"\n✓ Metadata saved to: {metadata_path}")
+    print(f"[OK] Metadata saved to: {metadata_path}")
     
     print("\n" + "=" * 60)
     print("Data generation complete!")
