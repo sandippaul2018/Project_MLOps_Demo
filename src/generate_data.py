@@ -22,7 +22,7 @@ def generate_curing_data(n_samples=500, random_state=42):
     np.random.seed(random_state)
     
     # Generate sensor data with realistic distributions
-    barn_temperature = np.random.normal(loc=85, scale=5, size=n_samples)  # Normal ~70°C, std=5
+    barn_temperature = np.random.normal(loc=90, scale=5, size=n_samples)  # Normal ~70°C, std=5
     barn_humidity = np.random.normal(loc=60, scale=8, size=n_samples)      # Normal ~60%, std=8
     leaf_moisture = np.random.normal(loc=18, scale=3, size=n_samples)      # Normal ~18%, std=3
     airflow_rate = np.random.uniform(low=5, high=25, size=n_samples)       # Uniform 5-25 CFM
