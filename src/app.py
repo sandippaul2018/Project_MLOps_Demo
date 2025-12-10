@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from pycaret.classification import load_model, predict_model
+import joblib
 import os
 
 # Page Config
@@ -19,11 +19,11 @@ st.markdown('System Status: ONLINE | Client: British American Tobacco')
 st.info('This dashboard demonstrates MLOps in action. Changes pushed to GitHub trigger a retraining of the model below.')
 
 # Load Model Logic
-model_path = 'bat_curing_pipeline'
+model_path = 'bat_curing_pipeline.pkl'
 
-if os.path.exists(model_path + '.pkl'):
+if os.path.exists(model_path):
     try:
-        model = load_model(model_path)
+        model = joblib.load(model_path)
         st.sidebar.success('AI Model Loaded')
 
         # Prediction Logic
@@ -36,16 +36,18 @@ if os.path.exists(model_path + '.pkl'):
         })
         
         if st.button('Analyze Batch Quality', type='primary'):
-            predictions = predict_model(model, data=input_df)
-            grade = predictions['prediction_label'][0]
-            score = predictions['prediction_score'][0]
+            prediction = model.predict(input_df)[0]
+            probability = model.predict_proba(input_df)[0]
             
             col1, col2 = st.columns(2)
             with col1:
+                grade = 'Premium' if prediction == 'Premium' else 'Standard'
+                confidence = max(probability) * 100
+                
                 if grade == 'Premium':
-                    st.success(f'PREDICTION: PREMIUM\n\nConfidence: {score:.2f}')
+                    st.success(f'PREDICTION: PREMIUM\n\nConfidence: {confidence:.1f}%')
                 else:
-                    st.error(f'PREDICTION: STANDARD\n\nConfidence: {score:.2f}')
+                    st.error(f'PREDICTION: STANDARD\n\nConfidence: {confidence:.1f}%')
             with col2:
                 st.metric('Temp Deviation', f'{temp - 70}C')
         

@@ -17,6 +17,8 @@ BAT-OptiCure-MLOps/
 ├── .github/
 │   └── workflows/
 │       └── mlops.yml           # CI/CD pipeline configuration
+├── docs/
+│   └── HLD.md                  # High Level Design document
 ├── src/
 │   ├── generate_data.py        # Data generation script
 │   ├── train.py                # Model training script
@@ -25,6 +27,10 @@ BAT-OptiCure-MLOps/
 ├── .gitignore                  # Git ignore file
 └── README.md                   # This file
 ```
+
+### Design Doc
+
+- High Level Design: see `docs/HLD.md` for architecture, scope, data flow, CI/CD, and runbook details.
 
 ## Setup Instructions
 
