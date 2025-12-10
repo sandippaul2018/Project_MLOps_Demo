@@ -21,19 +21,42 @@ jobs:
       
       - name: Install Dependencies
         run: |
+          echo "Installing dependencies..."
+          pip install --upgrade pip
           pip install -r requirements.txt
+          echo "Dependencies installed successfully"
       
       - name: Generate Fresh Data
         run: |
+          echo "Starting data generation..."
           python src/generate_data.py
+          echo "Data generation complete"
+          ls -lah curing_data.csv
       
       - name: Train New Model
         run: |
+          echo "Starting model training..."
           python src/train.py
+          echo "Model training complete"
+          ls -lah bat_curing_pipeline.pkl model_metrics.csv
+      
+      - name: Check Git Status
+        run: |
+          git status
+          echo "---"
+          git diff --stat
       
       - name: Commit and Push Changes
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git add bat_curing_pipeline.pkl model_metrics.csv curing_data.csv curing_data_metadata.json
-          git diff --quiet --cached || (git commit -m 'MLOps: Auto-retrained model' && git push)
+          echo "Files staged:"
+          git diff --cached --stat
+          if git diff --quiet --cached; then
+            echo "No changes to commit"
+          else
+            git commit -m 'MLOps: Auto-retrained model'
+            git push
+            echo "Successfully pushed changes"
+          fi
