@@ -12,6 +12,17 @@ temp = st.sidebar.slider('Barn Temperature (C)', 50, 90, 70, help='Optimal: 65-7
 humid = st.sidebar.slider('Humidity (%)', 20, 100, 60, help='Optimal: 50-70%')
 moisture = st.sidebar.slider('Leaf Moisture (%)', 10, 30, 18, help='Target: ~18%')
 
+# NEW: Add Model Version/Timestamp Display
+st.sidebar.markdown("---")
+st.sidebar.subheader("⚙️ MLOps Status")
+if os.path.exists(model_path + '.pkl'):
+    # Get the time the model file was last modified
+    mod_time = os.path.getmtime(model_path + '.pkl')
+    timestamp = datetime.datetime.fromtimestamp(mod_time).strftime('%Y-%m-%d %H:%M:%S')
+    st.sidebar.success(f"Model Last Trained:\n{timestamp}")
+else:
+    st.sidebar.error("Model Missing")
+
 # Main Dashboard
 st.title('OptiCure AI: Intelligent Curing Control')
 st.markdown('System Status: ONLINE | Client: British American Tobacco')
